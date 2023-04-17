@@ -1,6 +1,7 @@
 const express = require('express');
 const mongoose = require('mongoose');
-
+const dbLink = "mongodb+srv://pacebook:test31415@cluster0.y7amop4.mongodb.net/?retryWrites=true&w=majority"
+mongoose.connect(dbLink,{useNewURLParser: true, useUnifiedTopology: true}).then(()=>console.log("connected to database"));
 const app = express();
 app.use(express.json());
 
