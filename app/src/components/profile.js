@@ -7,20 +7,27 @@ import Form from "./form";
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [date,setDate] = useState(new Date());
-  const[moodVal,setMoodVal] = useState(3);
+  const[moodVal,setMoodVal] = useState(0);
   const [isVis, setVis] = useState(false);
-  let initMap = new Map();
-  initMap.set(new Date().toDateString(),1);
-  const [markedDates, setMarkedDates] = useState(initMap);
-
+  const [markedDates, setMarkedDates] = useState(new Map());
+  const [markDatesArr,setMarkDatesArr]=useState([]);
+  console.log(user);
   const titleClassName = ({date})=>{
     const val = markedDates.get(date.toDateString());
       let classname = 'val'+val;
       console.log(classname);
      return classname;
-    
-   
   }
+
+  useEffect(()=>{
+    const fetchData = async()=>{
+      const response = await fetch(`http://localhost:8000/${user.email}`);
+      const userData = await response.json();
+      console.log(userData);
+    }
+    fetchData();
+  },[isAuthenticated]);
+
   const handleMoodValChange=(val)=>{
     setMoodVal(val);
     console.log(moodVal);

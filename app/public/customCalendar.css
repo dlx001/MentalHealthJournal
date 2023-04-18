@@ -79,9 +79,7 @@
     font-weight: bold;
   }
   
-  .react-calendar__month-view__days__day--weekend {
-    color: #d10000;
-  }
+ 
   
   .react-calendar__month-view__days__day--neighboringMonth {
     color: #757575;
@@ -142,33 +140,33 @@
     background-color: #e6e6e6;
   }
   .val1 {
-    background-color: #ff0000;
+    background-color: #f16d6d;
   }
   .val2 {
-    background-color: #FF3300;
+    background-color: #c76b54;
   }
   .val3 {
-    background-color: #FF6600;
+    background-color: #d2956c;
   }
   .val4 {
-    background-color: #FF9900;
+    background-color: #deae66;
   }
   .val5 {
-    background-color: #FFCC00;
+    background-color: #e1c96c;
   }
   .val6 {
-    background-color: #FFFF00;
+    background-color: #e6e68a;
   }
   .val7 {
-    background-color: #99FF00;
+    background-color: #dcf7b4;
   }
   .val8 {
-    background-color: #66FF00;
+    background-color: #d4edc3;
   }
   .val9 {
-    background-color:#33FF00;
+    background-color:#b2dfa7;
   }
   .val10 {
-    background-color:#00FF00;
+    background-color:#8ee08e;
   }
   
