@@ -24,7 +24,7 @@ const Profile = () => {
     const fetchData = async()=>{
       const response = await fetch(`http://localhost:8000/${user.email}`);
       const userData = await response.json();
-      const map = new Map(Object.entries(userData));
+      const map = new Map(Object.entries(userData.calendarMap));
       setMarkedDates(map);
     }
     fetchData();
@@ -51,9 +51,9 @@ const Profile = () => {
     const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
-      body: JSON.stringify({date:`${date.toDateString}`,value: `${moodVal}`})
+      body: JSON.stringify({date:`${date.toDateString()}`,value: `${moodVal}`})
     };
-    fetch('http://localhost:8000/',requestOptions);
+    fetch(`http://localhost:8000/${user.email}`,requestOptions);
   }
 
 

@@ -10,6 +10,22 @@ const app = express();
 app.use(cors());
 app.use(express.json());
 
+app.post('/:email', async (req, res) => {
+  console.log("attempt to post");
+  console.log(req.body);
+
+  const email = req.params.email;
+
+  try {
+    const user = await UserModel.findOne({ email: email });
+    const map = new Map(user.calendarMap);
+    map.set(req.body.date, req.body.value);
+    const result = await UserModel.updateOne({ email: email }, { calendarMap: map });
+  } catch (err) {
+    console.log(err);
+  }
+});
+
 app.get('/:email', async(req, res) => {
   console.log("attempt to add");
   const email = req.params.email;
