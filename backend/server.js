@@ -1,7 +1,9 @@
 const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
-const dbLink = "mongodb+srv://admin:developertest@usercluster.ty5c9zf.mongodb.net/?retryWrites=true&w=majority"
+const dotenv = require('dotenv');
+dotenv.config();
+const dbLink = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@usercluster.ty5c9zf.mongodb.net/?retryWrites=true&w=majority`
 mongoose.connect(dbLink,{useNewURLParser: true, useUnifiedTopology: true}).then(()=>console.log("connected to database"));
 const UserModel = require('./models/User')
 const app = express();
