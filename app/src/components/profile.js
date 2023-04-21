@@ -3,7 +3,8 @@ import React from "react";
 import Calendar from 'react-calendar'
 import { useState,useEffect } from "react";
 import Form from "./form";
-
+import LogoutButton from "./logout";
+import Header from "./Header";
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [date,setDate] = useState(new Date());
@@ -68,6 +69,7 @@ const Profile = () => {
   return (
     isAuthenticated && (
       <div>
+        <Header></Header>
         <Calendar tileClassName={titleClassName} onChange={setDate} value={date} onClickDay={onDateSelect} ></Calendar>
         {isVis&&<Form onClick ={onClick} day={date.toDateString()} handleMoodValChange={handleMoodValChange}></Form>}
       </div>

@@ -1,16 +1,11 @@
 
-import './App.css';
-import LoginButton from './components/login';
-import LogoutButton from './components/logout';
 import Profile from './components/profile';
+import CoverPage from './components/coverPage';
 function App() {
   return (
-    <div className="App">
-      <header className="App-header">
-        <LoginButton></LoginButton>
-        <LogoutButton></LogoutButton>
-        <Profile></Profile>
-      </header>
+    <div>
+      <CoverPage></CoverPage>
+      <Profile></Profile>
     </div>
   );
 }
