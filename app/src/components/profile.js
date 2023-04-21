@@ -70,8 +70,12 @@ const Profile = () => {
     isAuthenticated && (
       <div>
         <Header></Header>
+        <div style={{display:"flex",   background: "linear-gradient(to top right, rgb(206, 241, 255) 10%,rgb(241, 241, 241)30%,rgb(241, 241, 241))"}}>
         <Calendar tileClassName={titleClassName} onChange={setDate} value={date} onClickDay={onDateSelect} ></Calendar>
-        {isVis&&<Form onClick ={onClick} day={date.toDateString()} handleMoodValChange={handleMoodValChange}></Form>}
+        {isVis&&<Form className = "inputForm"onClick ={onClick} day={date.toDateString()} handleMoodValChange={handleMoodValChange} ></Form>}
+        {!isVis&&<div className="emptyForm" style={{width:"500px",padding:"7% 12% 5% 5%"}}></div>}
+          </div>
+       
       </div>
     )
   );
