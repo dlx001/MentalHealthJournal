@@ -16,7 +16,6 @@ const Profile = () => {
   const titleClassName = ({date})=>{
       const val = markedDates.get(date.toDateString());
       let classname = 'val'+val;
-      console.log(classname);
      return classname;
   }
 
@@ -39,22 +38,33 @@ const Profile = () => {
 
   //toggle visibility of form on date select
   let onDateSelect =(dateValue)=>{
-    setVis(true);
+    const today = new Date();
     setDate(dateValue);
+    const selectedDate = new Date(dateValue);
+    if(selectedDate<=today){
+      setVis(true);
+    }else{
+      setVis(false);
+    }
+    
+    
+   
   }
 
   //function to pass into form component to add date and vals to markedDates and update database 
   let onClick =()=>{
     setVis(false);
-    const newMap = new Map([...markedDates,[date.toDateString(),moodVal]]);
-    setMarkedDates(newMap);
-    console.log(markedDates);
-    const requestOptions = {
+    if(moodVal>0&&moodVal<=10){
+      const newMap = new Map([...markedDates,[date.toDateString(),moodVal]]);
+      setMarkedDates(newMap);
+      const requestOptions = {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({date:`${date.toDateString()}`,value: `${moodVal}`})
     };
     fetch(`http://localhost:8000/${user.email}`,requestOptions);
+    }
+    setMoodVal(0);
   }
 
 
@@ -70,7 +80,7 @@ const Profile = () => {
     isAuthenticated && (
       <div>
         <Header></Header>
-        <div style={{display:"flex",   background: "linear-gradient(to top right, rgb(206, 241, 255) 10%,rgb(241, 241, 241)30%,rgb(241, 241, 241))"}}>
+        <div style={{display:"flex",   background: "white"}}>
         <Calendar tileClassName={titleClassName} onChange={setDate} value={date} onClickDay={onDateSelect} ></Calendar>
         {isVis&&<Form className = "inputForm"onClick ={onClick} day={date.toDateString()} handleMoodValChange={handleMoodValChange} ></Form>}
         {!isVis&&<div className="emptyForm" style={{width:"500px",padding:"7% 12% 5% 5%"}}></div>}

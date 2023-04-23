@@ -1,10 +1,9 @@
-
 import Profile from './components/profile';
-import CoverPage from './components/coverPage';
+import LoginButton from './components/login';
 function App() {
   return (
     <div>
-      <CoverPage></CoverPage>
+      <LoginButton></LoginButton>
       <Profile></Profile>
     </div>
   );
