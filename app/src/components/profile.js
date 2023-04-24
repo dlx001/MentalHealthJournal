@@ -5,12 +5,14 @@ import { useState,useEffect } from "react";
 import Form from "./form";
 import LogoutButton from "./logout";
 import Header from "./Header";
+import StatusPanel from "./StatusPanel";
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [date,setDate] = useState(new Date());
   const[moodVal,setMoodVal] = useState(0);
   const [isVis, setVis] = useState(false);
   const [markedDates, setMarkedDates] = useState(new Map());
+  const [userInfo,setUserInfo]=useState([]);
   
   //function to create highlights on calendarMap 
   const titleClassName = ({date})=>{
@@ -24,16 +26,17 @@ const Profile = () => {
     const fetchData = async()=>{
       const response = await fetch(`http://localhost:8000/${user.email}`);
       const userData = await response.json();
+      setUserInfo(userData);
       const map = new Map(Object.entries(userData.calendarMap));
       setMarkedDates(map);
     }
     fetchData();
   },[isAuthenticated]);
-
+  //console.log(userInfo);
   //function to be used in form component to set moodvals
   const handleMoodValChange=(val)=>{
     setMoodVal(val);
-    console.log(moodVal);
+    //console.log(moodVal);
   }
 
   //toggle visibility of form on date select
@@ -45,10 +48,7 @@ const Profile = () => {
       setVis(true);
     }else{
       setVis(false);
-    }
-    
-    
-   
+    }  
   }
 
   //function to pass into form component to add date and vals to markedDates and update database 
@@ -82,8 +82,7 @@ const Profile = () => {
         <Header></Header>
         <div style={{display:"flex",   background: "white"}}>
         <Calendar tileClassName={titleClassName} onChange={setDate} value={date} onClickDay={onDateSelect} ></Calendar>
-        {isVis&&<Form className = "inputForm"onClick ={onClick} day={date.toDateString()} handleMoodValChange={handleMoodValChange} ></Form>}
-        {!isVis&&<div className="emptyForm" style={{width:"500px",padding:"7% 12% 5% 5%"}}></div>}
+        <StatusPanel></StatusPanel>
           </div>
        
       </div>
