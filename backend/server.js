@@ -11,20 +11,61 @@ app.use(cors());
 app.use(express.json());
 
 app.post('/:email', async (req, res) => {
-  console.log("attempt to post");
-  console.log(req.body);
-
   const email = req.params.email;
 
   try {
     const user = await UserModel.findOne({ email: email });
     const map = new Map(user.calendarMap);
-    map.set(req.body.date, req.body.value);
+    let noteCollection = [];
+    let value = 0;
+    if (user.calendarMap && user.calendarMap.get(req.body.date)){
+      if(user.calendarMap.get(req.body.date).noteCollection){
+        noteCollection=user.calendarMap.get(req.body.date).noteCollection;
+      }
+    }
+    map.set(req.body.date, {
+      value: req.body.value,
+      noteCollection: noteCollection
+    });
     const result = await UserModel.updateOne({ email: email }, { calendarMap: map });
   } catch (err) {
     console.log(err);
   }
+
 });
+
+app.post('/:email/notes', async(req, res) => {
+
+ const email = req.params.email;
+
+  try {
+    const user = await UserModel.findOne({ email: email });
+    const map = new Map(user.calendarMap);
+    let noteCollection = [];
+    let value = 0;
+    if (user.calendarMap && user.calendarMap.get(req.body.date)){
+      if(user.calendarMap.get(req.body.date).value){
+        value=user.calendarMap.get(req.body.date).value;
+      }
+      if(user.calendarMap.get(req.body.date).noteCollection){
+        noteCollection=user.calendarMap.get(req.body.date).noteCollection;
+        console.log(noteCollection+"found")
+      }
+    }
+    console.log(noteCollection+ "noteCollection");
+    console.log(user.calendarMap);
+    noteCollection.push(req.body.note)
+    map.set(req.body.date, {
+      value: value,
+      noteCollection: noteCollection
+    });
+    const result = await UserModel.updateOne({ email: email }, { calendarMap: map });
+  } catch (err) {
+    console.log(err);
+  }
+
+});
+
 
 app.get('/:email', async(req, res) => {
   console.log("attempt to add");
@@ -35,6 +76,7 @@ app.get('/:email', async(req, res) => {
     if(user==null){
       user = new UserModel({
         email:email,
+        calendarMap: new Map()
       });
       await user.save();
       console.log(user);
@@ -43,7 +85,6 @@ app.get('/:email', async(req, res) => {
   catch (err) {
     console.log(err);
   }
-  console.log(user +"found")
   res.json(user);
 });
 
