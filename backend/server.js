@@ -33,6 +33,36 @@ app.post('/:email', async (req, res) => {
   }
 
 });
+app.delete('/:email/notes', async(req, res) => {
+  console.log("delete attempt");
+  const email = req.params.email;
+ 
+   try {
+     const user = await UserModel.findOne({ email: email });
+     const map = new Map(user.calendarMap);
+     let noteCollection = [];
+     let value = 0;
+     if (user.calendarMap && user.calendarMap.get(req.body.date)){
+       if(user.calendarMap.get(req.body.date).value){
+         value=user.calendarMap.get(req.body.date).value;
+       }
+       if(user.calendarMap.get(req.body.date).noteCollection){
+         noteCollection=user.calendarMap.get(req.body.date).noteCollection;
+         console.log(noteCollection+"found")
+       }
+     }
+     let removeNote = req.body.note;
+     noteCollection = noteCollection.filter(note => note.val!=removeNote.val||note.description != removeNote.description||note.time!=removeNote.time)
+     map.set(req.body.date, {
+       value: value,
+       noteCollection: noteCollection
+     });
+     const result = await UserModel.updateOne({ email: email }, { calendarMap: map });
+   } catch (err) {
+     console.log(err);
+   }
+ 
+ });
 
 app.post('/:email/notes', async(req, res) => {
 

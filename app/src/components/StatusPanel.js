@@ -8,20 +8,43 @@ const StatusPanel = (props)=>{
     const [noteCollection,setNoteCollection]=useState([]);
     const [formVis,setFormVis]=useState(false);
     const [note,setNote ]=useState([{time:"",description:"",val:""}])
-    console.log(noteCollection);
+    //console.log(noteCollection);
     useEffect(()=>{
         let day = props.day;
         let obj = props.userInfo.calendarMap
         if(obj&&obj[day]){
             notes=obj[day].noteCollection;
-            console.log(notes);
+            //console.log(notes);
             setNoteCollection(notes);
         }else{
             setNoteCollection([]);
         }
     },[notes,props.day])
-    return( <div>
-        {noteCollection.map((note,i)=><Note description={note.description} val = {note.val} time={note.time} key={i}></Note>)}
+    const removeNote =(removeNote)=>{
+        props.setUserInfo((prevState) => ({
+            ...prevState,
+            calendarMap: {
+              ...prevState.calendarMap,
+              [props.day]: {
+                ...prevState.calendarMap[props.day],
+                noteCollection: (prevState.calendarMap[props.day]?.noteCollection ?? []).filter(note => note.val!=removeNote.val||note.description != removeNote.description||note.time!=removeNote.time)
+              }
+            }
+          }));    
+          const requestOptions = {
+            method: 'DELETE',
+            headers: { 'Content-Type': 'application/json' },
+            body: JSON.stringify({ date: props.day, note: removeNote})
+          };
+          fetch(`http://localhost:8000/${props.user.email}/notes`, requestOptions);  
+         
+    }
+    useEffect(()=>{
+        console.log(props.userInfo);
+    },[props.userInfo])
+   
+    return( <div style={{width:"350px"}}>
+        {noteCollection.map((note,i)=><Note removeNote={removeNote} setUserInfo={props.setUserInfo} date={props.day} description={note.description} val = {note.val} time={note.time} key={i}></Note>)}
         <button onClick={()=>setFormVis(true)}>add Note</button>
         {formVis&&<AddNote userInfo={props.userInfo} setUserInfo={props.setUserInfo} user={props.user} date={props.day} setFormVis = {setFormVis} note = {note} setNote={setNote} setNoteCollection={setNoteCollection}></AddNote>}
         <Form isVis={props.isVis} day = {props.day} handleMoodValChange={props.handleMoodValChange} onClick={props.onClick}></Form>

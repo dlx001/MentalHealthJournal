@@ -7,7 +7,11 @@ const AddNote = ({userInfo,setUserInfo,setNote,setNoteCollection,setFormVis,note
       
       const onSubmit = () => {
         const today = new Date();
-        const time = today.getHours() + ":" + today.getMinutes();
+        let minutes = today.getMinutes();
+        if(minutes<10){
+          minutes = "0"+minutes;
+        }
+        const time = today.getHours() + ":" + minutes;
         const updateNote = { description: note.description, val: note.val, time: time };
         setUserInfo((prevState) => ({
           ...prevState,
@@ -15,10 +19,14 @@ const AddNote = ({userInfo,setUserInfo,setNote,setNoteCollection,setFormVis,note
             ...prevState.calendarMap,
             [date]: {
               ...prevState.calendarMap[date],
-              noteCollection: [...prevState.calendarMap[date].noteCollection, updateNote]
-            }
-          }
+              noteCollection: [
+                ...(prevState.calendarMap[date]?.noteCollection ?? []),
+                updateNote,
+              ],
+            },
+          },
         }));
+        
         
         const requestOptions = {
           method: 'POST',

@@ -84,7 +84,7 @@ const Profile = () => {
         <Header />
         <div style={{ display: "flex", background: "white" }}>
           <Calendar tileClassName={titleClassName} onChange={setDate} value={date} onClickDay={onDateSelect} />
-          {userInfo &&<StatusPanel setUserInfo = {setUserInfo} userInfo = {userInfo} user={user} isVis={isVis} day={date.toDateString()} onClick={onClick} handleMoodValChange={setMoodVal} />}
+          {userInfo &&<StatusPanel markedDates={markedDates} setUserInfo = {setUserInfo} userInfo = {userInfo} user={user} isVis={isVis} day={date.toDateString()} onClick={onClick} handleMoodValChange={setMoodVal} />}
         </div>
         <LogoutButton />
       </div>
