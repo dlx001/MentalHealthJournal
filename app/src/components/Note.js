@@ -22,9 +22,9 @@ const Note = (props) => {
   };
 
   return (
-    <div style={{ paddingTop:"35px", display: 'flex', gap: '10px' }}>
+    <div style={{ display: 'flex', gap: '10px' }}>
       <p>{props.time}</p>
-      <p style={{width:"300px"}}>{fullTextShown ? props.description : text}
+      <p style={{width:"300px",wordBreak: "break-all"}}>{fullTextShown ? props.description : text}
       {!fullTextShown && text.length > 100 && (
         <button style={{background:"none",border:"none",padding:"0",textDecoration:"underline",cursor:"pointer"}} onClick={seeMoreClick}>See more</button>
       )}
@@ -32,11 +32,9 @@ const Note = (props) => {
         <button onClick={seeLessClick} style={{background:"none",border:"none",padding:"0",textDecoration:"underline",cursor:"pointer"}} >See less</button>
       )}
       </p>
-      
-     
       <p> Mood level: {props.val}</p>
       {props.deleteVis && (
-        <button style={{ height: '20px', width: '20px' }} onClick={() => props.removeNote(props)}>x</button>
+        <button style={{ height: '20px', width: '20px',marginTop:"15px",textAlign:"center" }} onClick={() => props.removeNote(props)}>x</button>
       )}
     </div>
   );

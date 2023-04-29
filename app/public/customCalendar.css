@@ -140,7 +140,7 @@
   }
   
   .react-calendar__tile--hasActive {
-    background: #76baff;
+    background: #63c9f5;
   }
   
   .react-calendar__tile--hasActive:enabled:hover,
@@ -149,49 +149,84 @@
   }
   
   .react-calendar__tile--active {
-    background: linear-gradient(#006edc,#104172) ;
+    background: #BCE5F7 ;
     color: white;
   }
   
   .react-calendar__tile--active:enabled:hover,
   .react-calendar__tile--active:enabled:focus {
-    background: linear-gradient(#006edc,#104172);
+    background: #BCE5F7
   }
   
   .react-calendar--selectRange .react-calendar__tile--hover {
     background-color: #e6e6e6;
   }
+  
   .val1 {
-    background: linear-gradient(#ff9696,rgb(126, 15, 15));
+    background: #FFC7B1 
   }
   .val2 {
-    background: linear-gradient(#e79581,#641c0a);
+    background: #FFDAB3 
   }
   .val3 {
-    background:linear-gradient(#d2956c,#74350c) ;
+    background:#FFE4B2
   }
   .val4 {
-    background:linear-gradient( #deae66, #644009);
+    background:#FFF0B3 
   }
   .val5 {
-    background:linear-gradient(#e1c96c,#6c590c) ;
+    background:#C9FFE5 
   }
   .val6 {
-    background:linear-gradient(#e6e68a,#646409) ;
+    background:#BAFFC9 ;
   }
   .val7 {
-    background:linear-gradient(#dcf7b4,#4b760b) ;
+    background:#B5FFC9  ;
   }
   .val8 {
-    background: linear-gradient(#d4edc3,#306d08);
+    background: #B2FFCC
   }
   .val9 {
-    background:linear-gradient(#b2dfa7,#165d04);
+    background:#ADEBAD
   }
   .val10 {
-    background:linear-gradient(#8ee08e,#034503);
+    background:#7BBA85
   }
-  
 .inputForm{
   width:"500px"
+}
+
+
+
+.button-13 {
+  background-color: #fff;
+  border: 1px solid #d5d9d9;
+  border-radius: 8px;
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  box-sizing: border-box;
+  color: #0f1111;
+  cursor: pointer;
+  display: inline-block;
+  font-family: "Amazon Ember",sans-serif;
+  font-size: 13px;
+  line-height: 29px;
+  padding: 0 10px 0 11px;
+  position: relative;
+  text-align: center;
+  text-decoration: none;
+  user-select: none;
+  -webkit-user-select: none;
+  touch-action: manipulation;
+  vertical-align: middle;
+  width: 100px;
+}
+
+.button-13:hover {
+  background-color: #f7fafa;
+}
+
+.button-13:focus {
+  border-color: #008296;
+  box-shadow: rgba(213, 217, 217, .5) 0 2px 5px 0;
+  outline: 0;
 }

@@ -10,6 +10,7 @@ const StatusPanel = (props)=>{
     const [note,setNote ]=useState([{time:"",description:"",val:""}])
     const [deleteVis,setDeleteVis]=useState(false);
     const [deleteButtonVis,setDeleteButtonVis]=useState(true);
+    const [addButtonVis,setAddButtonVis]=useState(true);
     //console.log(noteCollection);
     useEffect(()=>{
         let day = props.day;
@@ -45,12 +46,12 @@ const StatusPanel = (props)=>{
         console.log(props.userInfo);
     },[props.userInfo])
    
-    return( <div style={{width:"800px"}}>
+    return( <div style={{width:"800px",paddingTop:"35px" }}>
         {noteCollection.map((note,i)=><Note deleteVis={deleteVis} removeNote={removeNote} setUserInfo={props.setUserInfo} date={props.day} description={note.description} val = {note.val} time={note.time} key={i}></Note>)}
-        <button onClick={()=>setFormVis(true)}>add Note</button>
-        {deleteButtonVis&&<button onClick={()=>{setDeleteVis(true);setDeleteButtonVis(false)}}>delete Note</button>}
-        {!deleteButtonVis&&<button onClick={()=> {setDeleteVis(false);setDeleteButtonVis(true)}}>finish deleting</button>}
-        {formVis&&<AddNote userInfo={props.userInfo} setUserInfo={props.setUserInfo} user={props.user} date={props.day} setFormVis = {setFormVis} note = {note} setNote={setNote} setNoteCollection={setNoteCollection}></AddNote>}
+       {addButtonVis&& <button onClick={()=>{setFormVis(true);setAddButtonVis(false)}} className="button-13">add Note</button>}
+        {noteCollection.length!=0&&deleteButtonVis&&<button className="button-13" style={{margin:"10px"}}onClick={()=>{setDeleteVis(true);setDeleteButtonVis(false)}}>delete Note</button>}
+        {!deleteButtonVis&&<button className="button-13" style={{width:"150px",margin:"10px"}}onClick={()=> {setDeleteVis(false);setDeleteButtonVis(true)}}>finish deleting</button>}
+        {formVis&&<AddNote setAddButtonVis ={setAddButtonVis} userInfo={props.userInfo} setUserInfo={props.setUserInfo} user={props.user} date={props.day} setFormVis = {setFormVis} note = {note} setNote={setNote} setNoteCollection={setNoteCollection}></AddNote>}
         <Form isVis={props.isVis} day = {props.day} handleMoodValChange={props.handleMoodValChange} onClick={props.onClick}></Form>
         </div>)
    
