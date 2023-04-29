@@ -5,7 +5,7 @@ import Form from "./form";
 import Header from "./Header";
 import LogoutButton from "./logout";
 import StatusPanel from "./StatusPanel";
-
+import DropDown from "./dropDown";
 const Profile = () => {
   const { user, isAuthenticated, isLoading } = useAuth0();
   const [date, setDate] = useState(new Date());
@@ -13,7 +13,7 @@ const Profile = () => {
   const [isVis, setVis] = useState(false);
   const [markedDates, setMarkedDates] = useState(new Map());
   const [userInfo, setUserInfo] = useState([]);
-
+  const [dropDownVis,setDropDownVis]=useState(false);
   // function to create highlights on calendarMap 
   const titleClassName = ({ date }) => {
     const obj = markedDates.get(date.toDateString());
@@ -79,16 +79,14 @@ const Profile = () => {
   }
 
   return (
-    isAuthenticated && (
       <div>
-        <Header />
+        <Header dropDownVis = {dropDownVis} setDropDownVis={setDropDownVis} />
         <div style={{ display: "flex", background: "white" }}>
           <Calendar tileClassName={titleClassName} onChange={setDate} value={date} onClickDay={onDateSelect} />
+          {dropDownVis&&<DropDown></DropDown>}
           {userInfo &&<StatusPanel markedDates={markedDates} setUserInfo = {setUserInfo} userInfo = {userInfo} user={user} isVis={isVis} day={date.toDateString()} onClick={onClick} handleMoodValChange={setMoodVal} />}
         </div>
-        <LogoutButton />
       </div>
-    )
   );
 };
 
