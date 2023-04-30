@@ -2,6 +2,8 @@ const express = require('express');
 const cors = require('cors');
 const mongoose = require('mongoose');
 const dotenv = require('dotenv');
+const PORT = process.env.PORT || 8000;
+const path = require('path')
 dotenv.config();
 const dbLink = `mongodb+srv://${process.env.DB_USERNAME}:${process.env.DB_PASSWORD}@usercluster.ty5c9zf.mongodb.net/?retryWrites=true&w=majority`
 mongoose.connect(dbLink,{useNewURLParser: true, useUnifiedTopology: true}).then(()=>console.log("connected to database"));
@@ -119,6 +121,6 @@ app.get('/:email', async(req, res) => {
 });
 
 
-app.listen(8000, () => {
+app.listen(PORT, () => {
   console.log('Server is listening on port 8000');
 });
