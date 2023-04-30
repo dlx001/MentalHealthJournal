@@ -24,7 +24,7 @@ const Note = (props) => {
   return (
     <div style={{ display: 'flex', gap: '10px' }}>
       <p>{props.time}</p>
-      <p style={{width:"300px",wordBreak: "break-all"}}>{fullTextShown ? props.description : text}
+      <p style={{width:"300px",wordBreak: "normal"}}>{fullTextShown ? props.description : text}
       {!fullTextShown && text.length > 100 && (
         <button style={{background:"none",border:"none",padding:"0",textDecoration:"underline",cursor:"pointer"}} onClick={seeMoreClick}>See more</button>
       )}

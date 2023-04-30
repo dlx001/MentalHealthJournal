@@ -49,11 +49,37 @@ const StatusPanel = (props)=>{
    
     return( <div style={{width:"800px",paddingTop:"40px",position:"relative", zInde:"1" }}>
         {noteCollection.map((note,i)=><Note deleteVis={deleteVis} removeNote={removeNote} setUserInfo={props.setUserInfo} date={props.day} description={note.description} val = {note.val} time={note.time} key={i}></Note>)}
-       {addButtonVis&&<button  style={{position:"relative"}} onClick={()=>{setFormVis(true);setAddButtonVis(false)}} className="button-13">add Note</button>}
-        {noteCollection.length!=0&&deleteButtonVis&&<button className="button-13" style={{margin:"10px"}}onClick={()=>{setDeleteVis(true);setDeleteButtonVis(false)}}>delete Note</button>}
-        {!deleteButtonVis&&<button className="button-13" style={{width:"150px",margin:"10px"}}onClick={()=> {setDeleteVis(false);setDeleteButtonVis(true)}}>finish deleting</button>}
-        {formVis&&<AddNote setAddButtonVis ={setAddButtonVis} userInfo={props.userInfo} setUserInfo={props.setUserInfo} user={props.user} date={props.day} setFormVis = {setFormVis} note = {note} setNote={setNote} setNoteCollection={setNoteCollection}></AddNote>}
-        <Form isVis={props.isVis} day = {props.day} handleMoodValChange={props.handleMoodValChange} onClick={props.onClick}></Form>
+
+       {addButtonVis&&<button 
+        style={{position:"relative"}} 
+        onClick={()=>{setFormVis(true);setAddButtonVis(false)}} 
+        className="button-13">Add Note</button>}
+
+        {noteCollection.length!=0&&deleteButtonVis&&
+        <button className="button-13" 
+        style={{margin:"10px"}}
+        onClick={()=>{setDeleteVis(true);setDeleteButtonVis(false)}}
+        >Delete Note</button>}
+
+        {!deleteButtonVis&&
+        <button className="button-13" 
+        style={{width:"150px",margin:"10px"}}
+        onClick={()=> {setDeleteVis(false);setDeleteButtonVis(true)}}
+        >Finish Deleting</button>}
+
+        {props.isVis&&
+        <button className='button-13'  
+        style={{width:"150px",margin:"10px"}} 
+        onClick={()=>props.setMoodValFormVis(true)}
+        >Change Mood Value</button>}
+
+        {formVis &&
+        <AddNote setAddButtonVis ={setAddButtonVis} userInfo={props.userInfo} setUserInfo={props.setUserInfo} user={props.user} 
+        date={props.day} setFormVis = {setFormVis} note = {note} setNote={setNote} setNoteCollection={setNoteCollection}></AddNote>}
+
+        {props.moodValFormVis&&
+        <Form setMoodValFormVis={props.setMoodValFormVis} day = {props.day} handleMoodValChange={props.handleMoodValChange} 
+        onClick={props.onClick}></Form>}
         </div>)
    
 }

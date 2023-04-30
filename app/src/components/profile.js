@@ -14,6 +14,50 @@ const Profile = () => {
   const [markedDates, setMarkedDates] = useState(new Map());
   const [userInfo, setUserInfo] = useState([]);
   const [dropDownVis,setDropDownVis]=useState(false);
+  const [moodValFormVis,setMoodValFormVis]=useState(true);
+  const fakeData = [
+    {
+      time: '08:00',
+      description: 'Started the day with a 10-minute meditation. Feeling focused and centered.',
+      mood: '7'
+    },
+    {
+      time: '10:00',
+      description: 'Went for a morning jog in the park. Feeling energized and refreshed.',
+      mood: '8'
+    },
+    {
+      time: '14:30',
+      description: 'Had a productive meeting with my team. Feeling accomplished.',
+      mood: '9'
+    },
+    {
+      time: '18:00',
+      description: 'Feeling a little overwhelmed with work. Took a break and went for a walk.',
+      mood: '6'
+    },
+    {
+      time: '20:00',
+      description: 'Attended a yoga class. Feeling relaxed and peaceful.',
+      mood: '8'
+    },
+    {
+      time: '22:00',
+      description: 'Relaxed with a good book before bed. Feeling calm and content.',
+      mood: '7'
+    }
+  ];
+  const addFakeData=()=>{
+    const requestOptions = {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ date: `${new Date().toDateString()}`, fakeData: `${fakeData}` })
+    };
+    fetch(`http://localhost:8000/${user.email}/fakeData`, requestOptions);
+    console.log('testing fake add');
+  }
+  addFakeData();
+  
   // function to create highlights on calendarMap 
   const titleClassName = ({ date }) => {
     const obj = markedDates.get(date.toDateString());
@@ -50,11 +94,19 @@ const Profile = () => {
     } else {
       setVis(false);
     }
+    /*
+
+    if(markedDates.get(dateValue.toDateString())&&markedDates.get(dateValue.toDateString()).value&&markedDates.get(dateValue.toDateString()).value>0){
+      setMoodValFormVis(false);
+    }else{
+      setMoodValFormVis(true);
+    }
+    */
   }
 
   // function to pass into form component to add date and vals to markedDates and update database 
   const onClick = () => {
-    setVis(false);
+    setMoodValFormVis(false);
     if (moodVal > 0 && moodVal <= 10) {
       const newMap = new Map([...markedDates, [date.toDateString(), { value: moodVal }]]);
       setMarkedDates(newMap);
@@ -71,7 +123,6 @@ const Profile = () => {
 
   useEffect(() => {
     console.log("Mood value changed to:", moodVal);
-    console.log("isVis value changed to:", isVis);
   }, [moodVal, isVis]);
 
   if (isLoading) {
@@ -84,7 +135,9 @@ const Profile = () => {
         <div style={{ display: "flex", background: "white" }}>
           <Calendar tileClassName={titleClassName} onChange={setDate} value={date} onClickDay={onDateSelect} />
           {dropDownVis&&<DropDown></DropDown>}
-          {userInfo &&<StatusPanel markedDates={markedDates} setUserInfo = {setUserInfo} userInfo = {userInfo} user={user} isVis={isVis} day={date.toDateString()} onClick={onClick} handleMoodValChange={setMoodVal} />}
+          {userInfo &&<StatusPanel markedDates={markedDates} setMoodValFormVis={setMoodValFormVis} moodValFormVis={moodValFormVis}
+          setUserInfo = {setUserInfo} userInfo = {userInfo} user={user} isVis={isVis} day={date.toDateString()} onClick={onClick} 
+          handleMoodValChange={setMoodVal} />}
         </div>
       </div>
   );
